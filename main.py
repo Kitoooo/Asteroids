@@ -10,7 +10,8 @@ from Player import *
 def main():
     # ============================INIT VALUES============================
     pygame.init()
-
+    global isRunning
+    isRunning = True
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption(GAME_TITLE)
 
@@ -25,11 +26,14 @@ def main():
     player = Player()
     sprite_list.add(player)
 
-    test = Asteroid()
-    asteroid_list.add(test)
-    sprite_list.add(test)
+    #test = Asteroid()
+    for i in range(1, 6):
+        ast = Asteroid(i)
+        sprite_list.add(ast)
+        asteroid_list.add(ast)
 
-    while True:
+    # ============================MAIN LOOP============================
+    while isRunning:
         clock.tick(60)
 
         for event in pygame.event.get():
@@ -43,11 +47,12 @@ def main():
 
         sprite_list.draw(screen)
 
-        if pygame.sprite.collide_mask(player, test):
-            test.image.fill("red")
-            player.angle += 0.5
-        else:
-            test.image.fill("green")
+        for ast in asteroid_list:
+            if pygame.sprite.collide_mask(player, ast):
+                print("collide with"+str(ast))
+                ast.kill()
+                player.hp -= 1
+                print(player.hp)
 
         sprite_list.update()
         pygame.display.update()
