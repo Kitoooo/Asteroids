@@ -37,21 +37,19 @@ def main():
                 pygame.quit()
                 exit()
 
+        # Drawing background and score
         screen.blit(background_surface, (0, 0))
         screen.blit(score_surface, (10, 10))
-
-        pygame.draw.polygon(surface=screen, color=(255, 255, 255), points=[
-                            (50, 100), (100, 50), (150, 100)])
 
         sprite_list.draw(screen)
 
         if pygame.sprite.collide_mask(player, test):
             test.image.fill("red")
+            player.angle += 0.5
         else:
             test.image.fill("green")
 
         sprite_list.update()
-
         pygame.display.update()
 
 
