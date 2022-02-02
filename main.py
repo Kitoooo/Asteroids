@@ -7,25 +7,24 @@ from config import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, size):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
 
-        player_size = (10*size, 10*size)
-        self.image = pygame.Surface(player_size, pygame.SRCALPHA, 32)
-        # self.image.fill("green") # testing_purpose
+        self.image = pygame.Surface((40,40), pygame.SRCALPHA, 32)
+        self.image = pygame.image.load("media\\player2.png").convert_alpha();
+        #self.image.fill("green") # testing_purpose
 
         self.rect = self.image.get_rect()
         self.rect.center = CENTER
 
-        points = [(self.rect.width/2, 0), (0, self.rect.height),
-                  (self.rect.width, self.rect.height)]
-        pygame.draw.polygon(self.image, "white", points)
+        self.angle = 0
 
         self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         self.rect.center = pygame.mouse.get_pos()
 
+        
 
 class Asteroid(pygame.sprite.Sprite):
     def __init__(self):
@@ -55,7 +54,7 @@ def main():
     asteroid_list = pygame.sprite.Group()
 
     # ====Player====
-    player = Player(4)
+    player = Player()
     sprite_list.add(player)
 
     test = Asteroid()
