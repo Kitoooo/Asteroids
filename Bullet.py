@@ -9,11 +9,13 @@ class Bullet(pygame.sprite.Sprite):
         self.image.fill("white")
         self.rect = self.image.get_rect()
         self.position = pygame.math.Vector2(player.position)
+        self.rect.center = self.position
         self.direction = pygame.math.Vector2(player.direction)
 
     def update(self):
         self.rect.center = self.position
         self.position -= self.direction*10;
+        self.checkBundaries()
 
     def checkBundaries(self):
         if self.position[0]>SCREEN_WIDTH+10: 
