@@ -19,12 +19,11 @@ def main():
 
     score = 0
     clock = pygame.time.Clock()
-    GAME_FONT = pygame.freetype.Font("media\\font.ttf", 32)
+    font = pygame.freetype.Font("media\\font.ttf", 32)
     background_surface = pygame.image.load("media\\background.jpg").convert()
     sprite_list = pygame.sprite.Group()
     asteroid_list = pygame.sprite.Group()
     bullet_list = pygame.sprite.Group()
-
 
     # ====Player====
     player = Player()
@@ -39,6 +38,7 @@ def main():
     # ============================MAIN LOOP============================
     while isRunning:
         clock.tick(60)
+        # ===========CONTROLS============
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             player.forward()
@@ -53,34 +53,50 @@ def main():
                 elif event.key == pygame.K_RIGHT:
                     player.angle_speed = 4
                 elif event.key == pygame.K_SPACE:
-                    sprite_list.add(Bullet(bullet_list,player))
+                    sprite_list.add(Bullet(bullet_list, player))
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.angle_speed = 0
+        if player.isAlive():
+            # ===========BACKGROUND===========
+            screen.blit(background_surface, (0, 0))
 
-        # Drawing background and score
-        screen.blit(background_surface, (0, 0))
+            # ===========RENDERING============
+            sprite_list.draw(screen)
 
-        sprite_list.draw(screen)
-
-        for ast in asteroid_list:
-            for bullet in bullet_list:
-                if pygame.sprite.collide_rect(bullet,ast):
+            # ===========COLLISION============
+            for ast in asteroid_list:
+                for bullet in bullet_list:
+                    if pygame.sprite.collide_rect(bullet, ast):
+                        ast.kill()
+                        bullet.kill()
+                        score += 1
+                        print(f"score: {score}")
+                if pygame.sprite.collide_mask(player, ast):
+                    print("collide with"+str(ast))
                     ast.kill()
-                    bullet.kill()
-                    score+=1;
-                    print(f"score: {score}")
-            if pygame.sprite.collide_mask(player, ast):
-                print("collide with"+str(ast))
-                ast.kill()
-                player.hp -= 1
-                print(player.hp)
+                    player.hp -= 1
 
+            # ============SCORE HP=============
+            font.render_to(screen, (10, 10), f"score: {score}", (255, 255, 255))
+            hp_rect = font.get_rect(f"hp: {player.hp}", size = 32)
+            hp_rect.topright = (SCREEN_WIDTH-10, 10)
+            font.render_to(screen, hp_rect, f"hp: {player.hp}", (255, 255, 255))
 
-        GAME_FONT.render_to(screen, (10, 10), f"score: {score}", (255, 255, 255))
-        sprite_list.update()
+            sprite_list.update()
+        else:
+            # ============GAMEOVER=============
+            screen.fill("black")
+            text = "GAME OVER !"
+            score_txt = f"score: {score}"
+            gameover_rect = font.get_rect(text, size = 62)
+            gameover_rect.midbottom = CENTER
+            score_rect = font.get_rect(score_txt, size = 62)
+            score_rect.midtop = (CENTER_X,CENTER_Y+10)
+            font.render_to(screen, gameover_rect, text, (255, 255, 255), size = 62)
+            font.render_to(screen, score_rect, score_txt, (255, 255, 255), size = 62)
+        
         pygame.display.update()
-
 
 if __name__ == "__main__":
     main()

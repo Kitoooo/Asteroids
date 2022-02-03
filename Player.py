@@ -31,19 +31,21 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
     def forward(self):
-        self.position -= self.direction*5; 
+        self.position -= self.direction*5
         self.checkBoundaries()
-    
+
     def checkBoundaries(self):
-        if self.position[0]>SCREEN_WIDTH+10: 
+        if self.position[0] > SCREEN_WIDTH+10:
             self.position[0] = -10
-        elif self.position[0]<-10: 
+        elif self.position[0] < -10:
             self.position[0] = SCREEN_WIDTH+10
-        elif self.position[1]>SCREEN_HEIGHT+10: 
+        elif self.position[1] > SCREEN_HEIGHT+10:
             self.position[1] = -10
-        elif self.position[1]<-10: 
+        elif self.position[1] < -10:
             self.position[1] = SCREEN_HEIGHT+10
 
+    def isAlive(self):
+        return self.hp > 0
 
 
 if __name__ == "__main__":
