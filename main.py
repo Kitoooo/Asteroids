@@ -35,11 +35,22 @@ def main():
     # ============================MAIN LOOP============================
     while isRunning:
         clock.tick(60)
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            player.forward()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    player.angle_speed = -4
+                elif event.key == pygame.K_RIGHT:
+                    player.angle_speed = 4
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                    player.angle_speed = 0
 
         # Drawing background and score
         screen.blit(background_surface, (0, 0))

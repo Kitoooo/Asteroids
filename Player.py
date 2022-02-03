@@ -1,5 +1,4 @@
 import pygame
-
 from config import *
 
 
@@ -14,17 +13,26 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=CENTER)
         self.angle = 0
         self.mask = pygame.mask.from_surface(self.image)
-
+        self.position = pygame.math.Vector2(CENTER)
+        self.direction = pygame.math.Vector2(0, 1)
+        self.speed = 5
+        self.angle_speed = 0
+        self.angle = 0
         self.hp = 3
 
     def update(self):
-        self.rect.center = pygame.mouse.get_pos()
         self.rotate()
+        self.rect.center = self.position
 
     def rotate(self):
-        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        self.direction.rotate_ip(self.angle_speed)
+        self.angle += self.angle_speed
+        self.image = pygame.transform.rotate(self.original_image, -self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
         self.mask = pygame.mask.from_surface(self.image)
+
+    def forward(self):
+        self.position -= self.direction*5;
 
 
 if __name__ == "__main__":
