@@ -49,4 +49,4 @@ class Player(pygame.sprite.Sprite):
 
 
 if __name__ == "__main__":
-    raise Exception("It should've been ran")
+    raise Exception("It shouldn't have been ran")

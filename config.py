@@ -1,5 +1,5 @@
 if __name__ == "__main__":
-    raise Exception("It should've been ran")
+    raise Exception("It shouldn't have been ran")
 
 GAME_TITLE = "Asteroids by Kito"
 

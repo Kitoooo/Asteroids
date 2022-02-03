@@ -27,3 +27,6 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
         elif self.position[1] < -10:
             self.kill()
+
+if __name__ == "__main__":
+    raise Exception("It shouldn't have been ran")

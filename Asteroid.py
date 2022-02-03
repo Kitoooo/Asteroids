@@ -46,3 +46,6 @@ class Asteroid(pygame.sprite.Sprite):
 
     def __str__(self):
         return f"(Asteroid id: {self.id})"
+
+if __name__ == "__main__":
+    raise Exception("It shouldn't have been ran")
