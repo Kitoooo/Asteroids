@@ -48,6 +48,7 @@ def main():
                     player.angle_speed = -4
                 elif event.key == pygame.K_RIGHT:
                     player.angle_speed = 4
+
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.angle_speed = 0

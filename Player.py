@@ -9,7 +9,6 @@ class Player(pygame.sprite.Sprite):
         self.original_image = pygame.image.load(
             "media\\player2.png").convert_alpha()
         self.image = pygame.image.load("media\\player2.png").convert_alpha()
-        # self.image.fill("green") # testing_purpose
         self.rect = self.image.get_rect(center=CENTER)
         self.angle = 0
         self.mask = pygame.mask.from_surface(self.image)
@@ -32,7 +31,13 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
     def forward(self):
-        self.position -= self.direction*5;
+        self.position -= self.direction*5; 
+        if self.position[0]>SCREEN_WIDTH+10: self.position[0] = -10
+        if self.position[0]<-10: self.position[0] = SCREEN_WIDTH+10
+        if self.position[1]>SCREEN_HEIGHT+10: self.position[1] = -10
+        if self.position[1]<-10: self.position[1] = SCREEN_HEIGHT+10
+    
+
 
 
 if __name__ == "__main__":
