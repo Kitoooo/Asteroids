@@ -35,14 +35,14 @@ class Asteroid(pygame.sprite.Sprite):
         self.checkBoundaries()
 
     def checkBoundaries(self):
-        if self.position[0] > SCREEN_WIDTH+200:
-            self.position[0] = -200
-        elif self.position[0] < -200:
-            self.position[0] = SCREEN_WIDTH+200
-        elif self.position[1] > SCREEN_HEIGHT+200:
-            self.position[1] = -200
-        elif self.position[1] < -200:
-            self.position[1] = SCREEN_HEIGHT+200
+        if self.position[0] > SCREEN_WIDTH+400:
+            self.position[0] = -400
+        elif self.position[0] < -400:
+            self.position[0] = SCREEN_WIDTH+400
+        elif self.position[1] > SCREEN_HEIGHT+400:
+            self.position[1] = -400
+        elif self.position[1] < -400:
+            self.position[1] = SCREEN_HEIGHT+400
 
     def __str__(self):
         return f"(Asteroid id: {self.id})"
