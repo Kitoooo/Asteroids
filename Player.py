@@ -32,11 +32,17 @@ class Player(pygame.sprite.Sprite):
 
     def forward(self):
         self.position -= self.direction*5; 
-        if self.position[0]>SCREEN_WIDTH+10: self.position[0] = -10
-        if self.position[0]<-10: self.position[0] = SCREEN_WIDTH+10
-        if self.position[1]>SCREEN_HEIGHT+10: self.position[1] = -10
-        if self.position[1]<-10: self.position[1] = SCREEN_HEIGHT+10
+        self.checkBoundaries()
     
+    def checkBoundaries(self):
+        if self.position[0]>SCREEN_WIDTH+10: 
+            self.position[0] = -10
+        elif self.position[0]<-10: 
+            self.position[0] = SCREEN_WIDTH+10
+        elif self.position[1]>SCREEN_HEIGHT+10: 
+            self.position[1] = -10
+        elif self.position[1]<-10: 
+            self.position[1] = SCREEN_HEIGHT+10
 
 
 

@@ -3,6 +3,7 @@ from sys import exit
 import pygame
 
 from Asteroid import *
+from Bullet import *
 from config import *
 from Player import *
 
@@ -21,6 +22,8 @@ def main():
     score_surface = font.render("score:", True, "white")
     sprite_list = pygame.sprite.Group()
     asteroid_list = pygame.sprite.Group()
+    bullet_list = pygame.sprite.Group()
+    score = 0
 
     # ====Player====
     player = Player()
@@ -48,7 +51,8 @@ def main():
                     player.angle_speed = -4
                 elif event.key == pygame.K_RIGHT:
                     player.angle_speed = 4
-
+                elif event.key == pygame.K_SPACE:
+                    sprite_list.add(Bullet(bullet_list,player))
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player.angle_speed = 0
@@ -60,11 +64,19 @@ def main():
         sprite_list.draw(screen)
 
         for ast in asteroid_list:
+            for bullet in bullet_list:
+                if pygame.sprite.collide_rect(bullet,ast):
+                    ast.kill()
+                    bullet.kill()
+                    score+=1;
+                    print(f"score: {score}")
             if pygame.sprite.collide_mask(player, ast):
                 print("collide with"+str(ast))
                 ast.kill()
                 player.hp -= 1
                 print(player.hp)
+
+
 
         sprite_list.update()
         pygame.display.update()
