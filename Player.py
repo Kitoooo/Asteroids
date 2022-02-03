@@ -3,8 +3,8 @@ from config import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self, group):
+        pygame.sprite.Sprite.__init__(self, group)
 
         self.original_image = pygame.image.load(
             "media\\player2.png").convert_alpha()
